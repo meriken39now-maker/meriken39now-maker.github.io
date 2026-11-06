@@ -5,13 +5,16 @@
 
 | 変えたいもの | 編集するファイル |
 |---|---|
+| おててつないでいるもの | `hands.txt` |
 | カレンダー | `calendar.txt` |
+| 通過シナリオ | `played.txt` |
+| 回せるシナリオ | `kp.txt` |
+| 所持サプリ | `supplements.txt` |
 | 共通ハウスルール | `rules/common.txt` |
 | システム別ハウスルール | `rules/CoC6.txt`・`rules/CoC7.txt`・`rules/emoklore.txt` |
 | キャラクターの一覧 | `characters/list.txt` |
 | キャラクターの中身 | `characters/(フォルダ名)/profile.txt` |
 | キャラクターの画像 | `characters/(フォルダ名)/icon.png`・`stand1.png`・`stand2.png`… |
-| 通過シナリオ・回せるシナリオ・所持サプリ・おててつないでいるもの | `index.html` の `DATA` |
 
 書き方は、各テキストファイルの `#` から始まるメモ行に書いてあります。
 
