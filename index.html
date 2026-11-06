@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="はゆわら(@meriken39now)のTRPGプロフィール。CoC6・CoC7・エモクロア。">
+<title>はゆわらのTRPGプロフ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap">
+<style>
+/* Layout: 上部タブで画面を切り替える1カラム構成。各画面はカードと一覧で組む */
+:root {
+  --bg: #ddd5ee;
+  --surface: #f8f5fc;
+  --ink: #261f38;
+  --muted: #5f5778;
+  --line: #d3c8e8;
+  --violet: #5c44c2;
+  --pink: #cf5a80;
+  --mint: #1b8f85;
+  --sun: #d9a43c;
+  --sat: #3f6fc4;
+  --violet-soft: #e6def7;
+  --pink-soft: #f4dde6;
+  --mint-soft: #d5ebe8;
+  --sun-soft: #f3e7c9;
+  --coc6: #2f9e5b; --coc6-soft: #d4eedd;
+  --coc7: #3f6fc4; --coc7-soft: #dae4f7;
+  --emo: #c4920f; --emo-soft: #f6eac3;
+  --font-display: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1827; --surface: #262036; --ink: #ece7f7; --muted: #aaa1c0; --line: #3a3150;
+    --violet: #9d86f0; --pink: #e47fa2; --mint: #4cc2b2; --sun: #e8bd5f; --sat: #7ea6ee;
+    --violet-soft: #352b55; --pink-soft: #452836; --mint-soft: #1d3a37; --sun-soft: #3f351f;
+    --coc6: #5cc98a; --coc6-soft: #1e3b2a; --coc7: #7ea6ee; --coc7-soft: #232f4d; --emo: #e8c35a; --emo-soft: #433818;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1827; --surface: #262036; --ink: #ece7f7; --muted: #aaa1c0; --line: #3a3150;
+  --violet: #9d86f0; --pink: #e47fa2; --mint: #4cc2b2; --sun: #e8bd5f; --sat: #7ea6ee;
+  --violet-soft: #352b55; --pink-soft: #452836; --mint-soft: #1d3a37; --sun-soft: #3f351f;
+    --coc6: #5cc98a; --coc6-soft: #1e3b2a; --coc7: #7ea6ee; --coc7-soft: #232f4d; --emo: #e8c35a; --emo-soft: #433818;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.75; transition: background-color .3s ease; }
+body.has-chara-bg { background: var(--chara-bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body.has-chara-bg { background: color-mix(in srgb, var(--chara-bg) 22%, var(--bg)); } }
+:root[data-theme="dark"] body.has-chara-bg { background: color-mix(in srgb, var(--chara-bg) 22%, var(--bg)); }
+.wrap {
+  max-width: 760px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 56px;
+  display: flex; flex-direction: column; gap: 22px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.35; }
+a { color: var(--violet); }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+/* タブ */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs a {
+  font-family: var(--font-display); font-weight: 800; font-size: 14px;
+  text-decoration: none; color: var(--ink);
+  padding: 6px 14px; border-radius: 999px;
+  border: 2px solid var(--ink); background: var(--surface);
+}
+.tabs a:hover { background: var(--violet-soft); }
+.tabs a[aria-current="page"] { background: var(--violet); border-color: var(--violet); color: #fff; }
+
+.view { display: flex; flex-direction: column; gap: 16px; }
+.view-head { display: flex; align-items: center; gap: 10px; }
+.view-head h2 { font-size: 22px; font-weight: 800; }
+.dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); flex: none; }
+.note { font-size: 12px; color: var(--muted); margin: 0; }
+
+/* プロフィールカード */
+.hero {
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 20px;
+  box-shadow: 6px 6px 0 var(--violet);
+  padding: 24px; display: flex; flex-direction: column; gap: 12px;
+}
+.hero-top { display: flex; align-items: center; gap: 16px; }
+.avatar {
+  width: 76px; height: 76px; flex: none; border-radius: 50%;
+  background: var(--pink); border: 2px solid var(--ink);
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 34px; color: #fff;
+}
+.hero h1 { font-size: 30px; font-weight: 800; letter-spacing: .02em; }
+.handle { color: var(--muted); font-size: 14px; }
+.handle a { color: var(--mint); font-weight: 700; text-decoration: none; }
+.handle a:hover { text-decoration: underline; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; font-weight: 700; padding: 3px 12px; border-radius: 999px; background: var(--mint-soft); color: var(--ink); }
+.s-coc6 { --sc: var(--coc6); background: var(--coc6-soft) !important; }
+.s-coc7 { --sc: var(--coc7); background: var(--coc7-soft) !important; }
+.s-emo  { --sc: var(--emo);  background: var(--emo-soft) !important; }
+.chip[class*="s-"] { box-shadow: inset 0 0 0 1.5px var(--sc); }
+.hero p { margin: 0; }
+.time { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+.time strong { color: var(--ink); }
+
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+.box-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.box-head h3 { font-size: 16px; font-weight: 800; color: var(--violet); }
+
+/* おててつないでいるもの */
+.hands { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.hands li { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+.hands li:last-child { border-bottom: none; }
+.hands .sc { font-weight: 700; }
+.hands .who { color: var(--muted); }
+
+/* カレンダー */
+.cal-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.cal-month { font-family: var(--font-display); font-weight: 800; font-size: 20px; }
+.cal-month small { font-size: 13px; color: var(--muted); margin-right: 4px; }
+.cal-status { font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--pink-soft); }
+.cal-nav { margin-left: auto; display: flex; gap: 6px; }
+.cal-nav button {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--ink); background: var(--surface); color: var(--ink);
+  font-family: var(--font-display); font-weight: 800; font-size: 16px; cursor: pointer;
+}
+.cal-nav button:hover { background: var(--violet-soft); }
+.cal {
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid var(--line); border-left: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.cal > div { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
+.cal .wd { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; padding: 4px 0; background: var(--violet-soft); }
+.cal .d { min-height: 72px; padding: 4px 5px; display: flex; flex-direction: column; gap: 3px; background: var(--surface); }
+.cal .d.blank { background: var(--bg); }
+.cal .num { font-size: 13px; font-weight: 700; line-height: 1; align-self: flex-start; padding: 2px 3px; border-radius: 5px; }
+.cal .sun .num, .cal .wd.sun { color: var(--pink); }
+.cal .sat .num, .cal .wd.sat { color: var(--sat); }
+.cal .d.today .num { background: var(--violet); color: #fff; }
+.cal .ev {
+  font-size: 11px; line-height: 1.35; padding: 2px 4px; border-radius: 4px;
+  background: var(--violet-soft); border-left: 3px solid var(--sc, var(--violet));
+  overflow-wrap: anywhere; word-break: break-all;
+}
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; border-left: 3px solid var(--sc); }
+@media (max-width: 480px) {
+  .cal .d { min-height: 58px; padding: 3px; }
+  .cal .num { font-size: 12px; }
+  .cal .ev { font-size: 10px; padding: 1px 2px; }
+}
+
+/* メニュー */
+.menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (max-width: 480px) { .menu { grid-template-columns: 1fr; } }
+.menu a {
+  display: flex; flex-direction: column; gap: 2px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 16px; text-decoration: none; color: var(--ink);
+}
+.menu a:hover { border-color: var(--violet); }
+.menu strong { font-family: var(--font-display); font-weight: 800; font-size: 16px; }
+.menu span { font-size: 13px; color: var(--muted); }
+
+.search-row { display: flex; justify-content: flex-end; }
+.search { position: relative; width: min(100%, 300px); }
+.search input {
+  width: 100%; font: inherit; font-size: 14px; color: var(--ink);
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 999px;
+  padding: 6px 14px 6px 34px;
+}
+.search input::placeholder { color: var(--muted); }
+.search input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; fill: none; stroke: var(--muted); stroke-width: 2.4; }
+.hit-count { font-size: 12px; color: var(--muted); text-align: right; margin-top: -8px; }
+.empty-msg { text-align: center; color: var(--muted); padding: 24px 0; }
+
+/* 通過シナリオ:年 → 月 → 縦線 → 記録カード */
+.year { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--violet); letter-spacing: .04em; }
+.month { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); }
+.mlabel { font-family: var(--font-display); font-weight: 800; font-size: 16px; padding-top: 10px; font-variant-numeric: tabular-nums; }
+.mitems { border-left: 3px solid var(--violet); padding: 4px 0 16px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.entry {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 10px 14px; display: grid; grid-template-columns: 2.1em minmax(0, 1fr); gap: 4px 10px;
+}
+.entry .day { font-family: var(--font-display); font-weight: 800; font-size: 20px; line-height: 1.2; color: var(--violet); font-variant-numeric: tabular-nums; grid-row: span 3; }
+.entry .etitle { font-weight: 700; font-size: 16px; line-height: 1.4; }
+.entry .row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 13px; }
+.entry .row b { font-weight: 700; color: var(--muted); margin-right: 2px; }
+.tag { padding: 1px 8px; border-radius: 6px; background: var(--mint-soft); font-weight: 700; font-size: 12px; }
+.tag[class*="s-"] { box-shadow: inset 0 0 0 1.5px var(--sc); }
+.tag.res { background: var(--mint-soft); }
+.tag.res.lost { background: var(--pink-soft); }
+@media (max-width: 480px) {
+  .month { grid-template-columns: 2.9em minmax(0, 1fr); }
+  .mitems { padding-left: 10px; }
+  .entry { padding: 10px; gap: 4px 8px; }
+}
+
+/* 画像の枠(画像が無いときはプレースホルダー) */
+.pic {
+  background: repeating-linear-gradient(45deg, var(--violet-soft) 0 12px, var(--surface) 12px 24px);
+  display: grid; place-items: center; color: var(--muted); font-size: 13px; font-weight: 700;
+  overflow: hidden; max-width: 100%;
+}
+.pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* キャラ一覧 */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+@media (max-width: 400px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+.card {
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 16px;
+  overflow: hidden; text-decoration: none; color: var(--ink); min-width: 0;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 var(--violet); }
+.card .pic { aspect-ratio: 1 / 1; border-bottom: 2px solid var(--ink); }
+.card-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.card h3 { font-size: 16px; font-weight: 800; overflow-wrap: anywhere; }
+.card .sub { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.card .sub b { color: var(--ink); font-weight: 700; }
+
+/* キャラ個別 */
+.back { font-size: 14px; font-weight: 700; text-decoration: none; }
+.back:hover { text-decoration: underline; }
+.chara-name { display: flex; flex-direction: column; gap: 2px; }
+.chara-name .kana { font-size: 13px; color: var(--muted); letter-spacing: .08em; }
+.chara-name h2 { font-size: 28px; font-weight: 800; }
+.chara-name .chips { margin-top: 6px; }
+.chara-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 640px) { .chara-top { grid-template-columns: minmax(0, 1fr); } }
+.stand { display: flex; flex-direction: column; gap: 10px; align-items: center; min-width: 0; }
+.full {
+  aspect-ratio: 3 / 5; width: 100%; max-width: 360px;
+  border: 2px solid var(--ink); border-radius: 18px; box-shadow: 6px 6px 0 var(--sc, var(--pink));
+}
+.full img { object-fit: contain; background: var(--surface); }
+#stand-pic { width: 100%; display: flex; justify-content: center; }
+.stand-nav { display: flex; align-items: center; gap: 10px; }
+.stand-nav span { font-family: var(--font-display); font-weight: 800; font-size: 14px; min-width: 7em; text-align: center; font-variant-numeric: tabular-nums; }
+.round-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--ink); background: var(--surface); color: var(--ink);
+  font-family: var(--font-display); font-weight: 800; font-size: 16px; cursor: pointer;
+}
+.round-btn:hover { background: var(--violet-soft); }
+.chara-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+/* ステータスのレーダーチャート */
+.radar { width: 100%; max-width: 320px; display: block; margin: 0 auto; }
+.radar .ring { fill: none; stroke: var(--line); stroke-width: 1; }
+.radar .spoke { stroke: var(--line); stroke-width: 1; }
+.radar .area { fill: var(--sc); fill-opacity: .28; stroke: var(--sc); stroke-width: 2; stroke-linejoin: round; }
+.radar .pt { fill: var(--sc); }
+.radar text { fill: var(--ink); font-size: 12px; font-family: var(--font-body); }
+.radar text .lb { font-weight: 700; fill: var(--muted); }
+
+/* 技能値 */
+.main-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; }
+.ms { background: var(--bg); border-radius: 8px; padding: 4px 8px; display: flex; flex-direction: column; min-width: 0; }
+.ms span { font-size: 11px; font-weight: 700; color: var(--muted); }
+.ms strong { font-size: 15px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.skills { list-style: none; margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--line); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; font-size: 14px; }
+.skills li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px dotted var(--line); }
+.skills b { font-variant-numeric: tabular-nums; }
+
+/* プロフィール */
+.profile-dl { display: grid; grid-template-columns: repeat(3, auto minmax(0, 1fr)); gap: 6px 12px; margin: 0; font-size: 14px; }
+@media (max-width: 560px) { .profile-dl { grid-template-columns: repeat(2, auto minmax(0, 1fr)); } }
+.profile-dl dt { color: var(--muted); font-weight: 700; white-space: nowrap; }
+.profile-dl dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.profile-dl.wide { grid-template-columns: auto minmax(0, 1fr); }
+.prof-sep { border: none; border-top: 1px dashed var(--line); margin: 12px 0; }
+.chara-played { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.chara-played li { display: flex; gap: 10px; flex-wrap: wrap; }
+.chara-played .dt { color: var(--muted); font-variant-numeric: tabular-nums; }
+.box p { margin: 0; font-size: 14px; white-space: pre-line; }
+
+/* 性格チャート */
+.chart { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
+@media (max-width: 640px) { .chart { grid-template-columns: minmax(0, 1fr); } }
+.axis { display: grid; grid-template-columns: 5.2em 4em auto 4em; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; }
+.axis .g { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.axis .l { text-align: right; }
+.boxes { display: flex; gap: 4px; }
+.boxes span {
+  width: 18px; height: 18px; border: 2px solid var(--ink); border-radius: 4px;
+  display: grid; place-items: center; font-size: 12px; line-height: 1; color: #fff;
+}
+.boxes span.on { background: var(--violet); border-color: var(--violet); }
+.axis > span { white-space: nowrap; }
+@media (max-width: 400px) { .axis { grid-template-columns: 4.6em 3.6em auto auto; gap: 4px; font-size: 12px; } }
+
+/* リンク */
+.links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.links li { display: flex; flex-direction: column; gap: 0; font-size: 14px; }
+.links strong { font-weight: 700; }
+.links a { font-size: 13px; overflow-wrap: anywhere; }
+
+/* 検索・絞り込み(回せるシナリオ) */
+.filters { display: flex; flex-direction: column; gap: 8px; }
+.filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.flabel { font-size: 12px; font-weight: 700; color: var(--muted); width: 4.6em; flex: none; white-space: nowrap; }
+.fchip {
+  font: inherit; font-size: 13px; font-weight: 700; color: var(--ink); cursor: pointer;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 999px; padding: 3px 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.fchip:hover { border-color: var(--violet); }
+.fchip.sys::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--sc); }
+.fchip[aria-pressed="true"] { background: var(--violet); border-color: var(--violet); color: #fff; }
+.fchip.sys[aria-pressed="true"] { background: var(--sc); border-color: var(--sc); }
+.fchip.sys[aria-pressed="true"]::before { background: #fff; }
+.kp-search { width: 100%; }
+.kp-search .search { width: 100%; }
+
+/* 回せるシナリオ一覧 */
+.table-box { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { font-family: var(--font-display); font-weight: 800; font-size: 13px; letter-spacing: .04em; background: var(--violet-soft); white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kp-title { display: flex; align-items: flex-start; gap: 7px; min-width: 8em; }
+.kp-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sc); flex: none; margin-top: .45em; }
+.lost { padding: 1px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; background: var(--mint-soft); }
+.lost.mid { background: var(--sun-soft); }
+.lost.high { background: var(--pink-soft); }
+@media (max-width: 480px) { th, td { padding: 8px; } table { font-size: 13px; } }
+
+/* 所持サプリ(控えめな一覧) */
+.supp { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 20px; font-size: 14px; }
+@media (max-width: 560px) { .supp { grid-template-columns: minmax(0, 1fr); } }
+.supp li { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.supp li span:last-child { overflow-wrap: anywhere; }
+.supp .tag { flex: none; }
+
+/* ハウスルール */
+.rule-box { display: flex; flex-direction: column; gap: 14px; }
+.rule-sel { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rule-sel label { font-size: 13px; font-weight: 700; color: var(--muted); }
+.rule-sel select {
+  font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 10px; padding: 5px 12px; cursor: pointer;
+}
+#rule-body { display: flex; flex-direction: column; gap: 14px; }
+.rule-sec { display: flex; flex-direction: column; gap: 4px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.rule-sec:first-child { border-top: none; padding-top: 0; }
+.rule-sec h4 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.rule-sec h4::before { content: ""; width: 4px; height: 1em; border-radius: 2px; background: var(--sc, var(--violet)); }
+.rule-sec p { margin: 0; font-size: 14px; white-space: pre-line; }
+
+footer { text-align: center; font-size: 12px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+</style>
+<style>body { margin: 0; } img { max-width: 100%; } [hidden] { display: none !important; }</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="tabs" aria-label="画面の切り替え">
+    <a href="#top" data-tab="top">プロフ</a>
+    <a href="#played" data-tab="played">通過シナリオ</a>
+    <a href="#chara" data-tab="chara">キャラクター</a>
+    <a href="#kp" data-tab="kp">回せるシナリオ</a>
+    <a href="#rules" data-tab="rules">ルール・サプリ</a>
+  </nav>
+  <main id="app"></main>
+  <footer>はゆわら / @meriken39now</footer>
+</div>
+
+<script>
+/* ===== ここを書き換えると中身が変わります ===== */
+const DATA = {
+  hands: [ // おててつないでいるもの
+    { scenario: "【例】Aシナリオ", partner: "Bさん" },
+    { scenario: "【例】Cシナリオ", partner: "Dさん、Eさん" }
+  ],
+  // カレンダー → calendar.txt を書き換えてください
+  calendar: {},
+  // 通過シナリオ:並び順は自由(日付の新しい順に自動で並びます)
+  // PCの書き方は pc: ["名前", ...] か、HO付きなら ho: [["HO1","名前"], ...]
+  played: [
+    { date: "2026-11-23", title: "【例】シナリオA", system: "CoC6",
+      kp: "Aさん", pl: ["Bさん", "Cさん", "Dさん"],
+      result: "生還", end: "エンド〇", pc: ["【例】朝霧 灯", "F", "G", "H"] },
+    { date: "2026-11-16", title: "【例】シナリオB", system: "CoC6",
+      kp: "Aさん", pl: ["Bさん", "Cさん", "Dさん"],
+      result: "生還", end: "エンド〇", ho: [["HO1", "【例】朝霧 灯"], ["HO2", "F"], ["HO3", "G"], ["HO4", "H"]] },
+    { date: "2026-10-28", title: "【例】シナリオC", system: "CoC7",
+      kp: "はゆわら", pl: ["Bさん", "Cさん"],
+      result: "ロスト", end: "エンド×", pc: ["【例】鷹野 恭介", "I"] },
+    { date: "2025-12-31", title: "【例】シナリオn", system: "エモクロア",
+      kp: "Jさん", pl: ["はゆわら"],
+      result: "生還", end: "トゥルーエンド", pc: ["【例】春野 ひなた"] }
+  ],
+  // ステータス・技能の項目(システムごと)。max はレーダーチャートの外周の値
+  systems: {
+    "CoC6":       { stats: ["STR","CON","POW","DEX","APP","SIZ","INT","EDU"], max: 18, main: ["SAN","HP","MP","DB","アイデア","幸運","知識"] },
+    "CoC7":       { stats: ["STR","CON","POW","DEX","APP","SIZ","INT","EDU"], max: 90, main: ["SAN","HP","MP","DB","アイデア","幸運","知識"] },
+    "エモクロア": { stats: ["身体","器用","精神","語感","知力","魅力","社会","運勢"], max: 6, main: ["共鳴感情","HP","MP"] }
+  },
+  // 性格チャートの項目(全員共通)。キャラの chart には "グループ:左の言葉": 1〜5 で書く(1が左寄り、書かない項目は空欄)
+  axes: [
+    ["性格","明るい","暗い"], ["傾向","慎重","大胆"], ["傾向","理性的","感情的"], ["社交性","外交的","内向的"],
+    ["役割","ボケ","ツッコミ"], ["言葉","直球","遠回し"], ["考え","上昇","下向き"], ["度胸","ある","ない"],
+    ["嘘","得意","不得手"], ["騙され","やすい","にくい"], ["肯定感","高い","低い"], ["プライド","高い","低い"],
+    ["仕事","できる","苦手"], ["勉強","できる","苦手"], ["文理","文系","理系"], ["部屋","綺麗","汚い"],
+    ["寝相","良い","悪い"], ["就寝","早い","遅い"], ["寝起き","強い","弱い"], ["料理","できる","できない"],
+    ["甘い","好み","苦手"], ["辛い","好み","苦手"], ["苦い","好み","苦手"], ["塩気","好み","苦手"],
+    ["お酒","強い","弱い"], ["ホラー","平気","苦手"], ["運動","得意","苦手"], ["方向感覚","ある","ない"],
+    ["機械","強い","弱い"], ["金遣い","堅実","浪費"]
+  ],
+  // キャラクター → characters/list.txt と characters/(フォルダ名)/profile.txt を書き換えてください
+  // 通過シナリオは、上の played の PC/HO の名前から自動で集めます(名前が違う場合は profile.txt の「別名」に書く)
+  chara: [],
+  // 回せるシナリオ:players は "ソロ" "タイマン" "2PL" "3PL" "4PL" "複数人" のどれか
+  // lost は "低" "中" "高" など自由(低=緑、中=黄、高=ピンク)
+  kp: [
+    { title: "【例】終電のその先へ", system: "エモクロア", players: "タイマン", time: "約3時間", lost: "低" },
+    { title: "【例】雪に閉ざされた洋館", system: "CoC6", players: "3PL", time: "約4時間", lost: "中" },
+    { title: "【例】午前二時の電話", system: "CoC7", players: "タイマン", time: "約2時間", lost: "低" },
+    { title: "【例】ひとりきりの図書館", system: "CoC6", players: "ソロ", time: "約1時間", lost: "低" },
+    { title: "【例】海辺の町の祭囃子", system: "CoC7", players: "4PL", time: "約6時間", lost: "高" },
+    { title: "【例】放課後の七不思議", system: "CoC6", players: "複数人", time: "約5時間", lost: "中" }
+  ],
+  supplements: [
+    { system: "CoC6", name: "【例】クトゥルフ神話TRPG ルールブック" },
+    { system: "CoC6", name: "【例】クトゥルフ2015" },
+    { system: "CoC6", name: "【例】クトゥルフ2010" },
+    { system: "CoC7", name: "【例】新クトゥルフ神話TRPG ルールブック" },
+    { system: "エモクロア", name: "【例】エモクロアTRPG 基本ルール" }
+  ],
+  // ハウスルール → rules フォルダのテキストを書き換えてください
+  rules: {}
+};
+/* ============================================ */
+
+const app = document.getElementById("app");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+/* 画像:拡張子なしの名前を渡すと png → jpg → jpeg → webp → gif の順に探す。見つからなければ「画像」 */
+const IMG_EXTS = ["png", "jpg", "jpeg", "webp", "gif"];
+const pic = (base, label, cls) => `<div class="pic ${cls}">${base
+  ? `<img src="${esc(base)}.${IMG_EXTS[0]}" data-base="${esc(base)}" data-i="0" alt="${esc(label)}" onerror="nextImg(this)">`
+  : "画像"}</div>`;
+function nextImg(img) {
+  const i = Number(img.dataset.i) + 1;
+  if (i < IMG_EXTS.length) { img.dataset.i = i; img.src = `${img.dataset.base}.${IMG_EXTS[i]}`; }
+  else { const box = img.parentNode; img.remove(); box.textContent = "画像"; }
+}
+const head = (title, color) => `<div class="view-head"><span class="dot" style="background:var(${color})"></span><h2>${title}</h2></div>`;
+const sample = `<p class="note">※ 【例】の内容は見本です。</p>`;
+const SYS_CLASS = { "CoC6": "s-coc6", "CoC7": "s-coc7", "エモクロア": "s-emo" };
+const sc = sys => SYS_CLASS[sys] || "";
+
+/* カレンダー */
+const now = new Date();
+let calOffset = 0;
+const monthKey = (y, m) => `${y}-${String(m + 1).padStart(2, "0")}`;
+
+function calendarHTML() {
+  const base = new Date(now.getFullYear(), now.getMonth() + calOffset, 1);
+  const y = base.getFullYear(), m = base.getMonth();
+  const info = DATA.calendar[monthKey(y, m)] || {};
+  const events = info.events || {};
+  const first = base.getDay(), days = new Date(y, m + 1, 0).getDate();
+  const wds = ["日","月","火","水","木","金","土"];
+  let cells = wds.map((w, i) => `<div class="wd${i === 0 ? " sun" : i === 6 ? " sat" : ""}">${w}</div>`).join("");
+  for (let i = 0; i < first; i++) cells += `<div class="d blank"></div>`;
+  for (let d = 1; d <= days; d++) {
+    const wd = (first + d - 1) % 7;
+    const today = y === now.getFullYear() && m === now.getMonth() && d === now.getDate();
+    const evs = (events[d] || []).map(e => typeof e === "string" ? { t: e } : e)
+      .map(e => `<span class="ev ${sc(e.s)}">${esc(e.t)}</span>`).join("");
+    cells += `<div class="d${wd === 0 ? " sun" : wd === 6 ? " sat" : ""}${today ? " today" : ""}"><span class="num">${d}</span>${evs}</div>`;
+  }
+  const rest = (7 - (first + days) % 7) % 7;
+  for (let i = 0; i < rest; i++) cells += `<div class="d blank"></div>`;
+  return `<div class="cal-head">
+      <span class="cal-month"><small>${y}年</small>${m + 1}月</span>${info.status ? `<span class="cal-status">${esc(info.status)}</span>` : ""}
+      <span class="cal-nav"><button type="button" id="cal-prev" aria-label="前の月">＜</button><button type="button" id="cal-next" aria-label="次の月">＞</button></span>
+    </div><div class="cal">${cells}</div>
+    <div class="legend"><span class="s-coc6" style="background:none!important"><i class="s-coc6"></i>CoC6</span><span class="s-coc7" style="background:none!important"><i class="s-coc7"></i>CoC7</span><span class="s-emo" style="background:none!important"><i class="s-emo"></i>エモクロア</span></div>`;
+}
+function drawCalendar() {
+  const box = document.getElementById("calendar");
+  if (!box) return;
+  box.innerHTML = calendarHTML();
+  document.getElementById("cal-prev").onclick = () => { calOffset--; drawCalendar(); };
+  document.getElementById("cal-next").onclick = () => { calOffset++; drawCalendar(); };
+}
+
+const views = {
+  top: () => `
+    <header class="hero">
+      <div class="hero-top">
+        <div class="avatar" aria-hidden="true">は</div>
+        <div><h1>はゆわら</h1>
+          <div class="handle"><a href="https://x.com/meriken39now" target="_blank" rel="noopener">@meriken39now</a></div></div>
+      </div>
+      <div class="chips"><span class="chip s-coc6">CoC6</span><span class="chip s-coc7">CoC7</span><span class="chip s-emo">エモクロア</span></div>
+      <p>20↑女、3LOKです！よろしくお願いします。</p>
+      <div class="time"><span>遊べる時間</span><strong>平日夜・土日</strong></div>
+    </header>
+    <div class="box" id="calendar"></div>
+    <div class="menu">
+      <a href="#played"><strong>通過シナリオ</strong><span>${DATA.played.length}件</span></a>
+      <a href="#chara"><strong>キャラクター</strong><span>${DATA.chara.length}人</span></a>
+      <a href="#kp"><strong>回せるシナリオ</strong><span>${DATA.kp.length}本</span></a>
+      <a href="#rules"><strong>ルール・サプリ</strong><span>ハウスルールと所持サプリ</span></a>
+    </div>
+    <div class="box">
+      <div class="box-head"><h3>おててつないでいるもの</h3></div>
+      <ul class="hands">${DATA.hands.map(h => `<li><span class="sc">${esc(h.scenario)}</span><span class="who">${esc(h.partner)}</span></li>`).join("")}</ul>
+    </div>`,
+
+  played: () => head("通過シナリオ", "--pink") + sample + `
+    <div class="search-row"><label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+      <input type="search" id="played-q" placeholder="シナリオ名・キャラ名で検索" aria-label="シナリオ名・キャラクター名で検索" autocomplete="off">
+    </label></div>
+    <div id="played-list"></div>`,
+
+  chara: () => head("キャラクター", "--sun") + sample + `<div class="cards">${[...DATA.chara].reverse().map(c => {
+      const pl = charaPlayed(c);
+      const sub = pl.length ? `<b>${esc(pl[0].title)}</b>${pl.length > 1 ? `　他${pl.length - 1}` : ""}` : "通過なし";
+      return `<a class="card" href="#c-${esc(c.id)}">${pic(c.icon, c.name, "")}
+        <div class="card-body"><h3>${esc(c.name)}</h3><span class="sub">${sub}</span></div></a>`;
+    }).join("")}</div>`,
+
+  charaDetail: c => {
+    const sys = DATA.systems[c.system] || DATA.systems["CoC6"];
+    const imgs = (c.images && c.images.length) ? c.images : [{ src: "", label: "立ち絵" }];
+    const p = c.profile || {};
+    const pf = k => `<dt>${k}</dt><dd>${esc(p[k] || "―")}</dd>`;
+    const pl = charaPlayed(c);
+    const links = (c.links || []).filter(l => /^https?:\/\//i.test(l.url || ""));
+    return `
+    <a class="back" href="#chara">← キャラクター一覧へ</a>
+    <div class="chara-name"><span class="kana">${esc(c.kana)}</span><h2>${esc(c.name)}</h2>
+      <div class="chips"><span class="chip ${sc(c.system)}">${esc(c.system)}</span></div></div>
+    <div class="chara-top" style="--sc: ${scVar(c.system)}">
+      <div class="stand">
+        <div id="stand-pic">${pic(imgs[0].src, c.name + "の立ち絵", "full")}</div>
+        ${imgs.length > 1 ? `<div class="stand-nav">
+          <button type="button" class="round-btn" id="st-prev" aria-label="前の立ち絵">＜</button>
+          <span id="st-label">${esc(imgs[0].label || "立ち絵")} 1/${imgs.length}</span>
+          <button type="button" class="round-btn" id="st-next" aria-label="次の立ち絵">＞</button></div>` : ""}
+      </div>
+      <div class="chara-side">
+        <div class="box"><div class="box-head"><h3>ステータス</h3></div>${radarSVG(sys, c.stats || {})}</div>
+        <div class="box"><div class="box-head"><h3>技能値</h3></div>
+          <div class="main-stats">${sys.main.map(k => `<div class="ms"><span>${k}</span><strong>${esc((c.main || {})[k] ?? "―")}</strong></div>`).join("")}</div>
+          ${(c.skills || []).length ? `<ul class="skills">${c.skills.map(([n, v]) => `<li><span>${esc(n)}</span><b>${esc(v)}</b></li>`).join("")}</ul>` : ""}
+        </div>
+      </div>
+    </div>
+    <div class="box"><div class="box-head"><h3>プロフィール</h3></div>
+      <dl class="profile-dl">${["職業","年齢","性別","身長","誕生日","星座"].map(pf).join("")}</dl>
+      <hr class="prof-sep">
+      <dl class="profile-dl wide">${["好きなもの","嫌いなもの"].map(pf).join("")}</dl>
+      <hr class="prof-sep">
+      <dl class="profile-dl wide"><dt>通過シナリオ</dt><dd>${pl.length ? `<ul class="chara-played">${pl.map(x => `<li><span class="dt">${x.date.replace(/-/g, ".")}</span><span>${esc(x.title)}</span></li>`).join("")}</ul>` : "まだありません"}</dd></dl>
+    </div>
+    <div class="box"><div class="box-head"><h3>性格</h3></div><p>${esc(c.text)}</p></div>
+    <div class="box"><div class="box-head"><h3>性格チャート</h3></div><div class="chart">${DATA.axes.map(([g, l, r]) => {
+      const v = (c.chart || {})[`${g}:${l}`];
+      return `<div class="axis" aria-label="${esc(g)}、${esc(l)}から${esc(r)}の5段階${v ? "中" + v : "、未設定"}">
+        <span class="g">[${esc(g)}]</span><span class="l">${esc(l)}</span>
+        <span class="boxes">${[1,2,3,4,5].map(n => `<span class="${n === v ? "on" : ""}">${n === v ? "✓" : ""}</span>`).join("")}</span>
+        <span>${esc(r)}</span></div>`;
+    }).join("")}</div></div>
+    ${links.length ? `<div class="box"><div class="box-head"><h3>リンク</h3></div><ul class="links">${links.map(l =>
+      `<li><strong>${esc(l.text)}</strong><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.url.replace(/^https?:\/\//, ""))}</a></li>`).join("")}</ul></div>` : ""}`;
+  },
+
+  kp: () => head("回せるシナリオ", "--mint") + `<p class="note">※ 【例】は見本です。気になるものがあれば DM でどうぞ。</p>
+    <div class="kp-search"><label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+      <input type="search" id="kp-q" placeholder="シナリオ名で検索" aria-label="シナリオ名で検索" autocomplete="off">
+    </label></div>
+    <div class="filters">
+      <div class="filter-row" role="group" aria-label="システムで絞り込み"><span class="flabel">システム</span>
+        ${["CoC6","CoC7","エモクロア"].map(v => `<button type="button" class="fchip sys" style="--sc:${scVar(v)}" data-kp-sys="${v}">${v}</button>`).join("")}</div>
+      <div class="filter-row" role="group" aria-label="人数で絞り込み"><span class="flabel">人数</span>
+        ${KP_PLAYERS.map(v => `<button type="button" class="fchip" data-kp-pl="${v}">${v}</button>`).join("")}</div>
+    </div>
+    <div id="kp-list"></div>`,
+
+  rules: () => {
+    const opts = Object.keys(RULE_FILES);
+    return head("所持サプリ", "--violet") + sample +
+    `<ul class="supp">${DATA.supplements.map(s => `<li><span class="tag ${sc(s.system)}">${esc(s.system)}</span><span>${esc(s.name)}</span></li>`).join("")}</ul>` +
+    head("ハウスルール", "--pink") +
+    `<div class="box"><div class="box-head"><h3>共通ハウスルール</h3></div><p>${esc(DATA.rules.common || "特になし")}</p></div>
+    <div class="box rule-box">
+      <div class="rule-sel"><label for="rule-sys">システム</label>
+        <select id="rule-sys">${opts.map(o => `<option value="${o}"${o === ruleSys ? " selected" : ""}>${o}</option>`).join("")}</select></div>
+      <div id="rule-body"></div>
+    </div>`;
+  }
+};
+
+/* 通過シナリオ一覧 */
+let playedQuery = "";
+const norm = t => String(t || "").normalize("NFKC").toLowerCase().replace(/\s+/g, "");
+const pcNames = p => p.ho ? p.ho.map(h => h[1]) : (p.pc || []);
+function playedListHTML() {
+  const q = norm(playedQuery);
+  const list = [...DATA.played].sort((a, b) => b.date.localeCompare(a.date))
+    .filter(p => !q || norm(p.title).includes(q) || pcNames(p).some(n => norm(n).includes(q)));
+  if (!list.length) return `<p class="empty-msg">「${esc(playedQuery)}」に当てはまる記録はありません。</p>`;
+  let html = q ? `<p class="hit-count">${list.length}件</p>` : "", year = "", month = "";
+  list.forEach(p => {
+    const [y, m, d] = p.date.split("-");
+    if (y !== year) { if (month) html += "</div></div>"; html += `<div class="year">${y}</div>`; year = y; month = ""; }
+    if (m !== month) { if (month) html += "</div></div>"; html += `<div class="month"><div class="mlabel">${Number(m)}月</div><div class="mitems">`; month = m; }
+    const pcs = p.ho ? p.ho.map(([h, n]) => `${esc(h)}:${esc(n)}`).join("、") : (p.pc || []).map(esc).join("、");
+    html += `<article class="entry">
+      <span class="day">${Number(d)}</span>
+      <span class="etitle">${esc(p.title)}</span>
+      <div class="row"><span class="tag ${sc(p.system)}">${esc(p.system)}</span><span><b>KP:</b>${esc(p.kp)}</span><span><b>PL:</b>${(p.pl || []).map(esc).join("、")}</span></div>
+      <div class="row">${p.result ? `<span class="tag res${/ロスト/.test(p.result) ? " lost" : ""}">${esc(p.result)}</span>` : ""}${p.end ? `<span>${esc(p.end)}</span>` : ""}${pcs ? `<span>${p.ho ? "" : "<b>PC:</b>"}${pcs}</span>` : ""}</div>
+    </article>`;
+  });
+  if (month) html += "</div></div>";
+  return html;
+}
+function bindPlayed() {
+  const box = document.getElementById("played-list");
+  if (!box) return;
+  const input = document.getElementById("played-q");
+  input.value = playedQuery;
+  box.innerHTML = playedListHTML();
+  input.addEventListener("input", () => { playedQuery = input.value; box.innerHTML = playedListHTML(); });
+}
+
+/* キャラクター */
+const scVar = sys => ({ "CoC6": "var(--coc6)", "CoC7": "var(--coc7)", "エモクロア": "var(--emo)" }[sys] || "var(--violet)");
+function charaPlayed(c) {
+  const names = [c.name, ...(c.alias || [])].map(norm);
+  return [...DATA.played].sort((a, b) => b.date.localeCompare(a.date))
+    .filter(p => pcNames(p).some(n => names.includes(norm(n))));
+}
+function radarSVG(sys, stats) {
+  const keys = sys.stats, n = keys.length;
+  const vals = keys.map(k => Number(stats[k]) || 0);
+  const max = Math.max(sys.max, ...vals) || 1;
+  const cx = 150, cy = 132, R = 84;
+  const pt = (i, r) => { const a = -Math.PI / 2 + 2 * Math.PI * i / n; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; };
+  const poly = r => keys.map((_, i) => pt(i, r).map(v => v.toFixed(1)).join(",")).join(" ");
+  let svg = `<svg class="radar" viewBox="0 0 300 264" role="img" aria-label="ステータス:${keys.map((k, i) => k + vals[i]).join("、")}">`;
+  [.25, .5, .75, 1].forEach(f => svg += `<polygon class="ring" points="${poly(R * f)}"/>`);
+  keys.forEach((_, i) => { const [x, y] = pt(i, R); svg += `<line class="spoke" x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`; });
+  svg += `<polygon class="area" points="${vals.map((v, i) => pt(i, R * Math.min(v, max) / max).map(t => t.toFixed(1)).join(",")).join(" ")}"/>`;
+  vals.forEach((v, i) => { const [x, y] = pt(i, R * Math.min(v, max) / max); svg += `<circle class="pt" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/>`; });
+  keys.forEach((k, i) => {
+    const a = -Math.PI / 2 + 2 * Math.PI * i / n, [x, y] = pt(i, R + 16), c = Math.cos(a);
+    const anchor = c > 0.3 ? "start" : c < -0.3 ? "end" : "middle";
+    svg += `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${anchor}"><tspan class="lb">${esc(k)}</tspan> ${esc(stats[k] ?? "―")}</text>`;
+  });
+  return svg + `</svg>`;
+}
+function bindChara(c) {
+  const imgs = (c.images && c.images.length) ? c.images : [];
+  if (imgs.length < 2) return;
+  let i = 0;
+  const show = d => {
+    i = (i + d + imgs.length) % imgs.length;
+    document.getElementById("stand-pic").innerHTML = pic(imgs[i].src, c.name + "の立ち絵", "full");
+    document.getElementById("st-label").textContent = `${imgs[i].label || "立ち絵"} ${i + 1}/${imgs.length}`;
+  };
+  document.getElementById("st-prev").onclick = () => show(-1);
+  document.getElementById("st-next").onclick = () => show(1);
+}
+
+/* 回せるシナリオ */
+const KP_PLAYERS = ["ソロ", "タイマン", "2PL", "3PL", "4PL", "複数人"];
+let kpQuery = "", kpSys = "", kpPl = "";
+function kpListHTML() {
+  const q = norm(kpQuery);
+  const list = DATA.kp.filter(k => (!q || norm(k.title).includes(q)) && (!kpSys || k.system === kpSys) && (!kpPl || k.players === kpPl));
+  if (!list.length) return `<p class="empty-msg">条件に当てはまるシナリオはありません。</p>`;
+  const lostCls = v => /高/.test(v) ? " high" : /中/.test(v) ? " mid" : "";
+  return `<p class="hit-count">${list.length}件</p><div class="table-box"><table>
+    <thead><tr><th>シナリオ名</th><th>人数</th><th>時間</th><th>ロスト率</th></tr></thead><tbody>
+    ${list.map(k => `<tr><td><div class="kp-title"><span class="kp-dot" style="--sc:${scVar(k.system)}" role="img" aria-label="${esc(k.system)}" title="${esc(k.system)}"></span><span>${esc(k.title)}</span></div></td>
+      <td class="num">${esc(k.players)}</td><td class="num">${esc(k.time)}</td><td><span class="lost${lostCls(k.lost)}">${esc(k.lost)}</span></td></tr>`).join("")}
+    </tbody></table></div>`;
+}
+function bindKp() {
+  const box = document.getElementById("kp-list");
+  if (!box) return;
+  const input = document.getElementById("kp-q");
+  const sync = () => {
+    document.querySelectorAll("[data-kp-sys]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kpSys === kpSys)));
+    document.querySelectorAll("[data-kp-pl]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.kpPl === kpPl)));
+    box.innerHTML = kpListHTML();
+  };
+  input.value = kpQuery;
+  input.addEventListener("input", () => { kpQuery = input.value; sync(); });
+  document.querySelectorAll("[data-kp-sys]").forEach(b => b.onclick = () => { kpSys = kpSys === b.dataset.kpSys ? "" : b.dataset.kpSys; sync(); });
+  document.querySelectorAll("[data-kp-pl]").forEach(b => b.onclick = () => { kpPl = kpPl === b.dataset.kpPl ? "" : b.dataset.kpPl; sync(); });
+  sync();
+}
+
+/* ハウスルール */
+const RULE_FILES = { "CoC6": "rules/CoC6.txt", "CoC7": "rules/CoC7.txt", "エモクロア": "rules/emoklore.txt" };
+let ruleSys = "CoC6";
+function bindRules() {
+  const body = document.getElementById("rule-body");
+  if (!body) return;
+  const sel = document.getElementById("rule-sys");
+  const draw = () => {
+    const secs = DATA.rules[ruleSys] || [];
+    body.style.setProperty("--sc", scVar(ruleSys));
+    body.innerHTML = secs.length
+      ? secs.map(s => `<section class="rule-sec"><h4>${esc(s.title)}</h4><p>${esc(s.body || "特になし")}</p></section>`).join("")
+      : `<p class="note">特になし</p>`;
+  };
+  sel.value = ruleSys;
+  sel.onchange = () => { ruleSys = sel.value; draw(); };
+  draw();
+}
+
+function render(scroll) {
+  const h = location.hash.slice(1) || "top";
+  let html, tab = h, chara = null;
+  if (h.startsWith("c-")) {
+    chara = DATA.chara.find(x => "c-" + x.id === h) || null;
+    html = chara ? views.charaDetail(chara) : views.chara();
+    tab = "chara";
+  } else {
+    html = (views[h] || views.top)();
+    if (!views[h]) tab = "top";
+  }
+  app.innerHTML = `<div class="view">${html}</div>`;
+  drawCalendar();
+  bindPlayed();
+  bindKp();
+  bindRules();
+  if (chara) bindChara(chara);
+  document.body.classList.toggle("has-chara-bg", !!(chara && chara.bg));
+  if (chara && chara.bg) document.body.style.setProperty("--chara-bg", chara.bg);
+  else document.body.style.removeProperty("--chara-bg");
+  document.querySelectorAll(".tabs a").forEach(a => {
+    if (a.dataset.tab === tab) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+  if (scroll) window.scrollTo(0, 0);
+}
+/* ===== テキストファイルの読み込み ===== */
+async function getText(path) {
+  const res = await fetch(path, { cache: "no-cache" });
+  if (!res.ok) return null; // ファイルが無いときは null
+  return (await res.text()).replace(/^﻿/, "").replace(/\r\n?/g, "\n");
+}
+const lines = t => (t || "").split("\n");
+const isMemo = l => /^\s*#/.test(l);
+const colon = l => l.replace(/：/g, ":");
+const SPLIT = /[ \t　]+/;
+
+// calendar.txt:[2026-11] 継続〇 / 8 CoC6 予定名
+function parseCalendar(t) {
+  const cal = {};
+  let cur = null;
+  lines(t).forEach(l => {
+    if (isMemo(l) || !l.trim()) return;
+    const m = l.trim().normalize("NFKC").match(/^\[(\d{4})-(\d{1,2})\]\s*(.*)$/);
+    if (m) { cur = cal[`${m[1]}-${m[2].padStart(2, "0")}`] = { status: m[3].trim(), events: {} }; return; }
+    if (!cur) return;
+    const parts = l.trim().split(SPLIT);
+    const day = Number(parts[0].normalize("NFKC").replace(/日$/, ""));
+    if (!day) return;
+    let s = "", rest = parts.slice(1);
+    const sys = norm(rest[0]);
+    const hit = Object.keys(SYS_CLASS).find(k => norm(k) === sys);
+    if (hit && rest.length > 1) { s = hit; rest = rest.slice(1); }
+    (cur.events[day] ||= []).push({ t: rest.join(" "), s });
+  });
+  return cal;
+}
+
+// rules/*.txt:「## 見出し」で区切る
+function parseRules(t) {
+  const secs = [];
+  lines(t).forEach(l => {
+    const h = l.match(/^\s*##\s*(.+)$/);
+    if (h) { secs.push({ title: h[1].trim(), body: [] }); return; }
+    if (isMemo(l) || !secs.length) return;
+    secs[secs.length - 1].body.push(l);
+  });
+  return secs.map(s => ({ title: s.title, body: s.body.join("\n").trim() }));
+}
+const plainText = t => lines(t).filter(l => !isMemo(l)).join("\n").trim();
+
+// characters/(id)/profile.txt
+const SECTION_KEYS = { "ステータス": "stats", "主要値": "main", "技能値": "main", "技能": "skills", "プロフィール": "profile", "性格": "text", "性格チャート": "chart", "リンク": "links" };
+function parseChara(id, t) {
+  const dir = `characters/${id}/`;
+  const c = { id, head: {}, stats: {}, main: {}, skills: [], profile: {}, text: [], chart: {}, links: [] };
+  let sec = "head";
+  lines(t).forEach(raw => {
+    if (isMemo(raw)) return;
+    const l = raw.trim();
+    const h = l.match(/^\[(.+)\]$/);
+    if (h) { sec = SECTION_KEYS[h[1].trim()] || "ignore"; return; }
+    if (sec === "text") { c.text.push(raw); return; }
+    if (!l || sec === "ignore") return;
+    if (sec === "links") {
+      const i = l.lastIndexOf("|");
+      if (i > 0) c.links.push({ text: l.slice(0, i).trim(), url: l.slice(i + 1).trim() });
+      else if (/^https?:\/\//i.test(l)) c.links.push({ text: l, url: l });
+      return;
+    }
+    const s = colon(l);
+    const i = sec === "chart" ? s.lastIndexOf(":") : s.indexOf(":");
+    if (i < 0) return;
+    const k = s.slice(0, i).trim(), v = s.slice(i + 1).trim();
+    if (sec === "skills") c.skills.push([k, v]);
+    else if (sec === "chart") { const n = Number(v.normalize("NFKC")); if (n >= 1 && n <= 5) c.chart[k] = n; }
+    else if (sec === "stats") c.stats[k] = v.normalize("NFKC");
+    else c[sec][k] = v;
+  });
+  const hd = c.head;
+  const bg = (hd["背景色"] || "").trim();
+  const labels = (hd["立ち絵"] || "立ち絵").split(/[,、，]/).map(x => x.trim()).filter(Boolean);
+  return {
+    id, name: hd["名前"] || id, kana: hd["よみ"] || "", system: hd["システム"] || "CoC6",
+    alias: (hd["別名"] || "").split(/[,、，]/).map(x => x.trim()).filter(Boolean),
+    bg: /^(#[0-9a-f]{3,8}|[a-z]+)$/i.test(bg) ? bg : "",
+    icon: dir + "icon",
+    images: labels.map((label, n) => ({ src: `${dir}stand${n + 1}`, label })),
+    stats: c.stats, main: c.main, skills: c.skills, profile: c.profile,
+    text: c.text.join("\n").trim(), chart: c.chart, links: c.links
+  };
+}
+
+async function loadAll() {
+  const [cal, common, list, ...ruleTexts] = await Promise.all([
+    getText("calendar.txt"), getText("rules/common.txt"), getText("characters/list.txt"),
+    ...Object.values(RULE_FILES).map(getText)
+  ]);
+  if (cal === null && list === null && common === null) throw new Error("not found");
+  DATA.calendar = parseCalendar(cal);
+  DATA.rules = { common: plainText(common) };
+  Object.keys(RULE_FILES).forEach((k, i) => DATA.rules[k] = parseRules(ruleTexts[i]));
+  const ids = lines(list).map(l => l.trim()).filter(l => l && !isMemo(l));
+  const bad = ids.filter(id => !/^[A-Za-z0-9_-]+$/.test(id));
+  if (bad.length) console.warn("フォルダ名に使えない文字があるため読み込みませんでした:", bad);
+  const ok = ids.filter(id => /^[A-Za-z0-9_-]+$/.test(id));
+  const profs = await Promise.all(ok.map(id => getText(`characters/${id}/profile.txt`)));
+  DATA.chara = ok.map((id, i) => {
+    if (profs[i] === null) { console.warn(`characters/${id}/profile.txt が見つかりません`); return null; }
+    return parseChara(id, profs[i]);
+  }).filter(Boolean);
+}
+
+window.addEventListener("hashchange", () => render(true));
+app.innerHTML = `<p class="empty-msg">読み込み中…</p>`;
+loadAll().catch(e => {
+  console.error(e);
+  app.innerHTML = `<p class="empty-msg">テキストファイルを読み込めませんでした。<br>index.html をダブルクリックで直接開いた場合は表示されません（公開ページか、ローカルサーバーで確認してください）。</p>`;
+  throw e;
+}).then(() => render(false));
+
+</script>
+
+</body>
+</html>
