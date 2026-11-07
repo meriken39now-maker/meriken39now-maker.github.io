@@ -298,6 +298,19 @@ a:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid
 }
 .boxes span.on { background: var(--violet); border-color: var(--violet); }
 .axis > span { white-space: nowrap; }
+/* 編集モード(ローカルの edit-server.js で開いたときだけ) */
+.boxes button { width: 18px; height: 18px; padding: 0; border: 2px solid var(--ink); border-radius: 4px; background: var(--surface); color: #fff; font-size: 12px; line-height: 1; cursor: pointer; display: grid; place-items: center; }
+.boxes button:hover { background: var(--violet-soft); }
+.boxes button.on { background: var(--violet); border-color: var(--violet); }
+.ed-text { width: 100%; min-height: 9em; font: inherit; font-size: 14px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); resize: vertical; box-sizing: border-box; }
+.ed-box { border: 2px dashed var(--violet); }
+.ed-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ed-row input[type=text] { font: inherit; font-size: 14px; padding: 6px 10px; width: 9em; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
+.ed-row input[type=color] { width: 40px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: none; cursor: pointer; }
+.ed-save { font: inherit; font-weight: 800; padding: 8px 22px; border-radius: 999px; border: 2px solid var(--violet); background: var(--violet); color: #fff; cursor: pointer; }
+.ed-save:disabled { opacity: .5; cursor: wait; }
+.ed-msg { font-size: 13px; font-weight: 700; }
+.ed-msg.err { color: #d33; }
 @media (max-width: 400px) { .axis { grid-template-columns: 4.6em 3.6em auto auto; gap: 4px; font-size: 12px; } }
 
 /* リンク */
@@ -413,6 +426,8 @@ const DATA = {
 /* ============================================ */
 
 const app = document.getElementById("app");
+// ローカルの edit-server.js で開いたときだけ、性格・性格チャート・背景色を画面で編集できる
+let EDIT = false;
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 /* 画像:拡張子なしの名前を渡すと png → jpg → jpeg → webp → gif の順に探す。見つからなければ「画像」 */
 const IMG_EXTS = ["png", "jpg", "jpeg", "webp", "gif"];
@@ -509,7 +524,7 @@ const views = {
     const imgs = (c.images && c.images.length) ? c.images : [{ src: "", label: "立ち絵" }];
     const p = c.profile || {};
     const pf = k => `<dt>${k}</dt><dd>${esc(p[k] || "―")}</dd>`;
-    const pl = charaPlayed(c);
+    const pl = charaPlayed(c).reverse(); // 古い順
     const links = (c.links || []).filter(l => /^https?:\/\//i.test(l.url || ""));
     return `
     <a class="back" href="#chara">← キャラクター一覧へ</a>
@@ -538,14 +553,25 @@ const views = {
       <hr class="prof-sep">
       <dl class="profile-dl wide"><dt>通過シナリオ</dt><dd>${pl.length ? `<ul class="chara-played">${pl.map(x => `<li><span class="dt">${x.date.replace(/-/g, ".")}</span><span>${esc(x.title)}</span></li>`).join("")}</ul>` : "まだありません"}</dd></dl>
     </div>
-    <div class="box"><div class="box-head"><h3>性格</h3></div><p>${esc(c.text)}</p></div>
+    <div class="box"><div class="box-head"><h3>性格</h3></div>${EDIT ? `<textarea id="ed-text" class="ed-text" placeholder="性格を自由に入力">${esc(c.text)}</textarea>` : `<p>${esc(c.text)}</p>`}</div>
     <div class="box"><div class="box-head"><h3>性格チャート</h3></div><div class="chart">${DATA.axes.map(([g, l, r]) => {
       const v = (c.chart || {})[`${g}:${l}`];
       return `<div class="axis" aria-label="${esc(g)}、${esc(l)}から${esc(r)}の5段階${v ? "中" + v : "、未設定"}">
         <span class="g">[${esc(g)}]</span><span class="l">${esc(l)}</span>
-        <span class="boxes">${[1,2,3,4,5].map(n => `<span class="${n === v ? "on" : ""}">${n === v ? "✓" : ""}</span>`).join("")}</span>
+        <span class="boxes">${[1,2,3,4,5].map(n => EDIT
+          ? `<button type="button" class="${n === v ? "on" : ""}" data-ck="${esc(g)}:${esc(l)}" data-cn="${n}" aria-label="${esc(l)}〜${esc(r)} ${n}">${n === v ? "✓" : ""}</button>`
+          : `<span class="${n === v ? "on" : ""}">${n === v ? "✓" : ""}</span>`).join("")}</span>
         <span>${esc(r)}</span></div>`;
     }).join("")}</div></div>
+    ${EDIT ? `<div class="box ed-box"><div class="box-head"><h3>編集（ローカル専用）</h3></div>
+      <p class="note">性格・性格チャート（同じ所をもう一度押すと空欄）・背景色を変えて「保存」を押すと profile.txt に書き込みます。</p>
+      <div class="ed-row" style="margin-top:10px">
+        <label for="ed-bg"><b>背景色</b></label>
+        <input type="color" id="ed-bg-pick" value="${/^#[0-9a-f]{6}$/i.test(c.bg) ? c.bg : "#ffffff"}" aria-label="色を選ぶ">
+        <input type="text" id="ed-bg" value="${esc(c.bg || "")}" placeholder="#ffccdd" autocomplete="off" spellcheck="false">
+        <button type="button" class="ed-save" id="ed-save">保存</button>
+        <span class="ed-msg" id="ed-msg" role="status"></span>
+      </div></div>` : ""}
     ${links.length ? `<div class="box"><div class="box-head"><h3>リンク</h3></div><ul class="links">${links.map(l =>
       `<li><strong>${esc(l.text)}</strong><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.url.replace(/^https?:\/\//, ""))}</a></li>`).join("")}</ul></div>` : ""}`;
   },
@@ -638,6 +664,7 @@ function radarSVG(sys, stats) {
   return svg + `</svg>`;
 }
 function bindChara(c) {
+  if (EDIT) bindEdit(c);
   const imgs = (c.images && c.images.length) ? c.images : [];
   if (imgs.length < 2) return;
   let i = 0;
@@ -648,6 +675,41 @@ function bindChara(c) {
   };
   document.getElementById("st-prev").onclick = () => show(-1);
   document.getElementById("st-next").onclick = () => show(1);
+}
+
+function bindEdit(c) {
+  const chart = { ...(c.chart || {}) };
+  document.querySelectorAll(".boxes button[data-ck]").forEach(b => b.onclick = () => {
+    const k = b.dataset.ck, n = Number(b.dataset.cn);
+    if (chart[k] === n) delete chart[k]; else chart[k] = n;
+    b.parentElement.querySelectorAll("button").forEach(x => {
+      const on = chart[k] === Number(x.dataset.cn);
+      x.classList.toggle("on", on); x.textContent = on ? "✓" : "";
+    });
+  });
+  const txt = document.getElementById("ed-bg"), pick = document.getElementById("ed-bg-pick"), msg = document.getElementById("ed-msg");
+  const okColor = v => /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v);
+  const preview = v => {
+    document.body.classList.toggle("has-chara-bg", okColor(v));
+    if (okColor(v)) document.body.style.setProperty("--chara-bg", v); else document.body.style.removeProperty("--chara-bg");
+  };
+  pick.oninput = () => { txt.value = pick.value; preview(pick.value); };
+  txt.oninput = () => { const v = txt.value.trim(); if (/^#[0-9a-f]{6}$/i.test(v)) pick.value = v; preview(v); };
+  document.getElementById("ed-save").onclick = async e => {
+    const btn = e.currentTarget, bg = txt.value.trim();
+    if (bg && !okColor(bg)) { msg.className = "ed-msg err"; msg.textContent = "カラーコードは #ffccdd の形で入力してください"; return; }
+    const text = document.getElementById("ed-text").value;
+    btn.disabled = true; msg.className = "ed-msg"; msg.textContent = "保存中…";
+    try {
+      const res = await fetch("__save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: c.id, text, chart, bg }) });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok || !j.ok) throw new Error(j.error || "保存できませんでした");
+      c.text = text.trim(); c.chart = { ...chart }; c.bg = bg;
+      msg.textContent = "保存しました（" + new Date().toLocaleTimeString() + "）";
+    } catch (err) {
+      msg.className = "ed-msg err"; msg.textContent = err.message;
+    } finally { btn.disabled = false; }
+  };
 }
 
 /* 回せるシナリオ */
@@ -858,6 +920,7 @@ async function loadAll() {
     ...Object.values(RULE_FILES).map(getText)
   ]);
   if (cal === null && list === null && common === null && played === null) throw new Error("not found");
+  if (["localhost", "127.0.0.1"].includes(location.hostname)) EDIT = (await getText("__edit")) === "ok";
   DATA.hands = pipeRows(hands).map(([scenario, partner]) => ({ scenario, partner: partner || "" }));
   DATA.played = parsePlayed(played);
   DATA.kp = pipeRows(kp).map(([title, system, players, time, lost]) =>
