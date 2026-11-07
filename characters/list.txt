@@ -53,7 +53,6 @@ sakuma-suzu
 kaisei
 tsubouchi-azusa
 kuroginu-hazuki
-inukai-sora
 hanayashiki-mikage
 yamanashi-hibana
 tsubatani-sakuya
@@ -66,13 +65,10 @@ meguriya-miyu
 shijima-yukito
 reonarudo-rinarudi
 hinata-makoto
-iishiro-hyaku
 hino-yuzuki
 sakuma-rei
 amehana-yuu
 shigurizuru
-hayama-kokuha
-katase-yuuya
 tsubouchi-hisami
 minashiro-ai
 miyanagi-tsugumi
