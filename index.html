@@ -580,7 +580,7 @@ const views = {
 /* 通過シナリオ一覧 */
 let playedQuery = "";
 const norm = t => String(t || "").normalize("NFKC").toLowerCase().replace(/\s+/g, "");
-const pcNames = p => p.ho ? p.ho.map(h => h[1]) : (p.pc || []);
+const pcNames = p => [...(p.ho ? p.ho.map(h => h[1]) : (p.pc || [])), ...(p.kpc || [])];
 function playedListHTML() {
   const q = norm(playedQuery);
   const list = [...DATA.played].sort((a, b) => b.date.localeCompare(a.date))
@@ -595,8 +595,8 @@ function playedListHTML() {
     html += `<article class="entry">
       <span class="day">${Number(d)}</span>
       <span class="etitle">${esc(p.title)}</span>
-      <div class="row"><span class="tag ${sc(p.system)}">${esc(p.system)}</span><span><b>KP:</b>${esc(p.kp)}</span><span><b>PL:</b>${(p.pl || []).map(esc).join("、")}</span></div>
-      <div class="row">${p.result ? `<span class="tag res${/ロスト/.test(p.result) ? " lost" : ""}">${esc(p.result)}</span>` : ""}${p.end ? `<span>${esc(p.end)}</span>` : ""}${pcs ? `<span>${p.ho ? "" : "<b>PC:</b>"}${pcs}</span>` : ""}</div>
+      <div class="row"><span class="tag ${sc(p.system)}">${esc(p.system)}</span><span><b>${p.kpLabel || "KP"}:</b>${esc(p.kp)}</span><span><b>PL:</b>${(p.pl || []).map(esc).join("、")}</span></div>
+      <div class="row">${p.result ? `<span class="tag res${/ロスト/.test(p.result) ? " lost" : ""}">${esc(p.result)}</span>` : ""}${p.end ? `<span>${esc(p.end)}</span>` : ""}${(p.kpc || []).length ? `<span><b>KPC:</b>${p.kpc.map(esc).join("、")}</span>` : ""}${pcs ? `<span>${p.ho ? "" : "<b>PC:</b>"}${pcs}</span>` : ""}</div>
     </article>`;
   });
   if (month) html += "</div></div>";
@@ -839,6 +839,8 @@ function parsePlayed(t) {
     else if (k === "シナリオ") cur.title = v;
     else if (k === "システム") cur.system = sysName(v);
     else if (k.toUpperCase() === "KP") cur.kp = v;
+    else if (k.toUpperCase() === "DL") { cur.kp = v; cur.kpLabel = "DL"; }
+    else if (k.toUpperCase() === "KPC") cur.kpc = listOf(v);
     else if (k.toUpperCase() === "PL") cur.pl = listOf(v);
     else if (k === "結果") cur.result = v;
     else if (k === "エンド") cur.end = v;
